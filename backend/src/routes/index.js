@@ -1,10 +1,8 @@
-import contentRoutes from "./content.routes.js";
-
 import userRoutes from "./user.routes.js";
 
-import readerRoutes from "./reader.routes.js"
-import writerRoutes from "./writer.routes.js";
+import profileRoutes from "./profile.routes.js"
 
+import projectRoutes from "./project.routes.js"
+import taskRoutes from "./task.routes.js";
 
-
-export {writerRoutes, userRoutes, readerRoutes, contentRoutes};
+export {userRoutes, projectRoutes, taskRoutes, profileRoutes};

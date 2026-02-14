@@ -12,7 +12,7 @@ const Footer = () => {
           <div className="md:col-span-1">
             <Link to="/" className="inline-block">
               <h3 className="text-3xl font-extrabold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                Augen
+                Scribe
               </h3>
             </Link>
             <p className="mt-4 text-muted-foreground text-sm max-w-xs">
@@ -31,7 +31,7 @@ const Footer = () => {
               <ul className="space-y-3 text-muted-foreground text-sm">
                 <li><Link to="/contents" className="hover:text-primary transition-colors">Explore Contents</Link></li>
                 <li><Link to="/register" className="hover:text-primary transition-colors">Become a Creator</Link></li>
-                <li><Link to="/about" className="hover:text-primary transition-colors">About Augen</Link></li>
+                <li><Link to="/about" className="hover:text-primary transition-colors">About Scribe</Link></li>
               </ul>
             </div>
 
@@ -70,7 +70,7 @@ const Footer = () => {
         
         <div className="mt-12 pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
           <div>
-            © {currentYear} Augen. All rights reserved.
+            © {currentYear} Scribe. All rights reserved.
           </div>
           
           <div className="mt-4 md:mt-0 flex items-center gap-6">

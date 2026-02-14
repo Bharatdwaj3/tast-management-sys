@@ -30,7 +30,6 @@ export default function Login() {
       await api.post('/user/login', formData);
       const userData = await dispatch(fetchUser()).unwrap();
       dispatch(loginSuccess({ user: userData }));
-      navigate(userData.accountType === 'reader' ? '/reader' : userData.accountType === 'creator' ? '/creator' : '/');
 
     } catch (err) {
       setError('Invalid credentials',err);
@@ -78,7 +77,7 @@ export default function Login() {
             <button className="px-4 py-1 rounded-full text-[8px] font-bold tracking-widest bg-primary text-foreground">LOGIN</button>
           </div>
 
-          <div className="flex-grow flex flex-col justify-center">
+          <div className="grow flex flex-col justify-center">
             <form onSubmit={handleSubmit} className="space-y-6 max-w-sm w-full mx-auto md:mx-0">
               {error && <p className="text-primary text-[9px] font-bold uppercase tracking-widest">{error}</p>}
               {successMessage && <p className="text-secondary text-[9px] font-bold uppercase tracking-widest">{successMessage}</p>}

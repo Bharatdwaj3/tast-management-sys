@@ -15,8 +15,7 @@ import {authUser} from "../middleware/index.js";
 router.post('/register', registerUser);
 router.post('/login',loginUser);
 router.get('/profile',authUser,profileUser);
-
 router.post('/logout',authUser,logoutUser);
-
 router.post('/refresh', refreshToken);
+
 export default router;

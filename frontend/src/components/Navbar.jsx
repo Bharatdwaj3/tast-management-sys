@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
-import { Search, Menu, X, User, LogOut, FileText, PenTool } from 'lucide-react';
+import { Search, Menu, X, User, LogOut, LayoutDashboard, FolderOpen, ListTodo } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchUser, clearUser } from '../store/avatarSlice';
 import api from '../util/api';
@@ -52,31 +52,47 @@ const Navbar = () => {
             to="/" 
             className="text-2xl font-black tracking-tight text-foreground hover:text-primary transition-colors"
           >
-            Augen
+            TaskFlow
           </Link>
 
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             <Link 
-              to="/explore" 
-              className="text-sm font-semibold text-foreground/70 hover:text-primary transition-colors"
+              to="/dashboard" 
+              className="text-sm font-semibold text-foreground/70 hover:text-primary transition-colors flex items-center gap-2"
             >
-              Explore
+              <LayoutDashboard size={16} />
+              Dashboard
+            </Link>
+            <Link 
+              to="/projects" 
+              className="text-sm font-semibold text-foreground/70 hover:text-primary transition-colors flex items-center gap-2"
+            >
+              <FolderOpen size={16} />
+              Projects
+            </Link>
+            <Link 
+              to="/tasks" 
+              className="text-sm font-semibold text-foreground/70 hover:text-primary transition-colors flex items-center gap-2"
+            >
+              <ListTodo size={16} />
+              Tasks
             </Link>
           </div>
 
           <div className="flex items-center gap-4">
+            {/* Search - you can implement project/task search later */}
             <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-foreground/5 border border-border rounded-xl hover:border-primary/30 transition-colors group">
               <Search size={18} className="text-foreground/40 group-hover:text-primary transition-colors" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search stories..."
+                placeholder="Search projects..."
                 className="bg-transparent text-sm text-foreground placeholder:text-foreground/40 focus:outline-none w-48"
               />
             </div>
 
-       
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               className="sm:hidden p-2 hover:bg-foreground/5 rounded-lg transition-colors"
@@ -84,7 +100,7 @@ const Navbar = () => {
               <Search size={20} className="text-foreground/60" />
             </button>
 
-            
+            {/* User Menu */}
             {user ? (
               <div className="relative">
                 <button
@@ -107,7 +123,6 @@ const Navbar = () => {
                   </span>
                 </button>
 
-               
                 <AnimatePresence>
                   {isMenuOpen && (
                     <>
@@ -126,10 +141,9 @@ const Navbar = () => {
                           <p className="text-xs text-foreground/50">@{user.userName}</p>
                         </div>
 
-                        
                         <div className="py-2">
                           <Link
-                            to={`/${user.accountType}`}
+                            to="/profile"
                             onClick={() => setIsMenuOpen(false)}
                             className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground/70 hover:bg-foreground/5 hover:text-primary transition-colors"
                           >
@@ -138,21 +152,39 @@ const Navbar = () => {
                           </Link>
                           
                           <Link
-                            to="/writer/new"
+                            to="/projects/new"
                             onClick={() => setIsMenuOpen(false)}
                             className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground/70 hover:bg-foreground/5 hover:text-primary transition-colors md:hidden"
                           >
-                            <PenTool size={16} />
-                            Write Story
+                            <FolderOpen size={16} />
+                            New Project
                           </Link>
                           
                           <Link
-                            to="/explore"
+                            to="/dashboard"
                             onClick={() => setIsMenuOpen(false)}
-                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground/70 hover:bg-foreground/5 hover:text-primary transition-colors"
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground/70 hover:bg-foreground/5 hover:text-primary transition-colors md:hidden"
                           >
-                            <FileText size={16} />
-                            My Stories
+                            <LayoutDashboard size={16} />
+                            Dashboard
+                          </Link>
+                          
+                          <Link
+                            to="/projects"
+                            onClick={() => setIsMenuOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground/70 hover:bg-foreground/5 hover:text-primary transition-colors md:hidden"
+                          >
+                            <FolderOpen size={16} />
+                            Projects
+                          </Link>
+                          
+                          <Link
+                            to="/tasks"
+                            onClick={() => setIsMenuOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground/70 hover:bg-foreground/5 hover:text-primary transition-colors md:hidden"
+                          >
+                            <ListTodo size={16} />
+                            Tasks
                           </Link>
                         </div>
 
@@ -187,7 +219,7 @@ const Navbar = () => {
               </div>
             )}
 
-           
+            {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden p-2 hover:bg-foreground/5 rounded-lg transition-colors"
@@ -201,7 +233,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        
+        {/* Mobile Search */}
         <AnimatePresence>
           {isSearchOpen && (
             <motion.div
@@ -216,7 +248,7 @@ const Navbar = () => {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search stories..."
+                  placeholder="Search projects..."
                   className="bg-transparent text-sm text-foreground placeholder:text-foreground/40 focus:outline-none flex-grow"
                   autoFocus
                 />
@@ -231,7 +263,7 @@ const Navbar = () => {
           )}
         </AnimatePresence>
 
-       
+        {/* Mobile Menu */}
         <AnimatePresence>
           {isMenuOpen && !user && (
             <motion.div
@@ -241,11 +273,25 @@ const Navbar = () => {
               className="md:hidden border-t border-border py-4 overflow-hidden"
             >
               <Link
-                to="/explore"
+                to="/dashboard"
                 onClick={() => setIsMenuOpen(false)}
                 className="block px-4 py-3 text-sm font-semibold text-foreground/70 hover:bg-foreground/5 hover:text-primary transition-colors rounded-lg"
               >
-                Explore
+                Dashboard
+              </Link>
+              <Link
+                to="/projects"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-4 py-3 text-sm font-semibold text-foreground/70 hover:bg-foreground/5 hover:text-primary transition-colors rounded-lg"
+              >
+                Projects
+              </Link>
+              <Link
+                to="/tasks"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-4 py-3 text-sm font-semibold text-foreground/70 hover:bg-foreground/5 hover:text-primary transition-colors rounded-lg"
+              >
+                Tasks
               </Link>
             </motion.div>
           )}

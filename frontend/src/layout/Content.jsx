@@ -43,17 +43,17 @@ const Content = () => {
           {[
             {
               name: "Read & Collect",
-              img: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800", // cozy reading vibe
+              img: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800", 
               desc: "Immerse yourself in visionary stories, essays, and ideas.",
             },
             {
               name: "Create & Share",
-              img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800", // creator at work
+              img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800", 
               desc: "Turn your thoughts into content that inspires others.",
             },
             {
               name: "Connect Deeply",
-              img: "https://images.unsplash.com/photo-1522202176988-66273c2b33c5?w=800", // community/connections
+              img: "https://images.unsplash.com/photo-1522202176988-66273c2b33c5?w=800", 
               desc: "Engage with creators and readers who see the world like you.",
             },
           ].map((item) => (

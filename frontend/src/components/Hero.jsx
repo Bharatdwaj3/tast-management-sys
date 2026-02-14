@@ -19,18 +19,18 @@ export const Hero = () => {
         className="w-full lg:w-[35%] lg:min-w-[380px] flex flex-col justify-center px-8 lg:px-16 xl:px-24 z-20 bg-card/50 backdrop-blur-md border-r border-border"
       >
         <h1 className="text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter text-foreground mb-6 leading-none uppercase select-none">
-          Augen
+          Scribe
         </h1>
         
         <p className="text-base lg:text-lg text-foreground/60 leading-relaxed mb-10 font-light">
-          Where creators share vision. Where readers find clarity. Step into an 
-          <span className="text-primary font-medium ml-1">unfiltered reality</span>.
+          Stop managing tools and start
+          <span className="text-primary font-medium ml-1">managing results</span>.
         </p>
         
         <div className="space-y-8">
           <button className="group relative flex items-center gap-4 w-fit hover:scale-105 transition-transform">
             <span className="text-xs font-bold uppercase tracking-widest text-foreground/70 group-hover:text-primary transition-colors border-b-2 border-border pb-2 group-hover:border-primary">
-              Discover Stories
+              Visit your project and tasks
             </span>
             <div className="flex gap-1.5 items-center">
               <div className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(220,38,38,0.5)] animate-pulse" />

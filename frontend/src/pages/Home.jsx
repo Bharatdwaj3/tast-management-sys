@@ -19,7 +19,7 @@ export default function Home() {
       <section className="pb-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-12 mb-12 flex items-center gap-4">
           <span className="text-xs font-bold tracking-widest uppercase text-foreground/60">
-            Recent Posts
+            Recent tasks
           </span>
           <div className="h-px flex-1 bg-border" />
         </div>

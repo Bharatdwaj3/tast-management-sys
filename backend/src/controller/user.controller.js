@@ -179,10 +179,19 @@ const refreshToken = async (req, res) => {
   return refreshTokenHandler(req, res);
 };
 
-
+const getProjectMembers = async (req, res) => {
+  try {
+    const users = await User.find({ isActive: true })
+      .select('_id userName fullName avatar accountType');
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 
 export{
+  getProjectMembers,
   registerUser,
   refreshToken,
   loginUser,

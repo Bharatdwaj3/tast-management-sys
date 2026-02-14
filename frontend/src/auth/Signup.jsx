@@ -23,7 +23,7 @@ export default function Signup() {
       await api.post('/user/register', formData);
       navigate('/login', { state: { message: 'Success' } });
     } catch (err) {
-      setError('Registration failed');
+      setError('Registration failed',err);
       setLoading(false);
     }
   };
@@ -100,13 +100,6 @@ export default function Signup() {
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-[9px] font-bold text-primary tracking-widest uppercase">Account Type</label>
-                <select name="accountType" onChange={handleChange} className="w-full bg-transparent border-b border-border py-1.5 text-foreground/60 focus:outline-none focus:border-primary transition-colors text-xs cursor-pointer">
-                  <option value="reader" className="bg-card">READER</option>
-                  <option value="creator" className="bg-card">CREATOR</option>
-                </select>
-              </div>
 
               <button type="submit" disabled={loading} className="mt-4 w-full md:w-max px-8 py-3.5 bg-primary text-foreground text-[10px] font-black uppercase tracking-[0.25em] rounded hover:bg-accent transition-all">
                 {loading ? 'Creating...' : 'Register'}

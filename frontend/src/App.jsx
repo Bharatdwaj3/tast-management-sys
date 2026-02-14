@@ -1,55 +1,78 @@
+import { Dashboard, Projects, Tasks, CreateProject, CreateTask } from "./pages/index";
+import { Login, Signup } from "./auth/index";
+import { Navbar } from "./components/index";
 
-import {Home, Explore, NewStory} from "./pages/index";
-import {Login, Signup} from "./auth/index";
-import {Navbar} from "./components/index";
-
-import  {   
-     ContentGrid, ContentDetails, ContentTab, 
-    ReaderProfile,
-    WriterProfile
+import {   
+    ProjectDetails,
+    TaskDetails,
+    Profile
 } from "./features/index";
 
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import Unauthorized from './errors/Unauthorized';
 
 function App() {
-
   return (
-    <>
-      <Router>
-            <Navbar/>
-          <Routes>
-              <Route path="/" element={<Home/>}/>
-              <Route path="/login" element={<Login/>}/>
-              <Route path="/signup" element={<Signup/>}/>
+    <Router>
+      <Navbar />
+      <Routes>
+        
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
 
-              <Route path="/content" element={<ContentGrid/>}/>
-              <Route path="/my-stories" element={<ContentGrid />} />
-              <Route path="/content/:id" element={<ContentDetails/>}/>
-              <Route path="/content/crud" element={<ContentTab/>}/>
-              <Route path="/explore" element={<Explore />} />
-
-              <Route path="/reader" element={
-                  <ProtectedRoute>
-                    <ReaderProfile/>  
-                  </ProtectedRoute>
-                } 
-              />
-              <Route path="/writer" element={
-                  <ProtectedRoute>
-                    <WriterProfile/>  
-                  </ProtectedRoute>
-                }
-               />
-              <Route path="/writer/new" element={<NewStory />} />
-              
-              <Route path="/unauthorized" element={<Unauthorized />} />
-
-          </Routes>
-        </Router>
-    </>
-  )
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } />
+        
+        <Route path="/projects" element={
+          <ProtectedRoute>
+            <Projects />
+          </ProtectedRoute>
+        } />
+        
+        <Route path="/projects/new" element={
+          <ProtectedRoute>
+            <CreateProject />
+          </ProtectedRoute>
+        } />
+        
+        <Route path="/projects/:id" element={
+          <ProtectedRoute>
+            <ProjectDetails />
+          </ProtectedRoute>
+        } />
+        
+        <Route path="/tasks" element={
+          <ProtectedRoute>
+            <Tasks />
+          </ProtectedRoute>
+        } />
+        
+        <Route path="/tasks/new" element={
+          <ProtectedRoute>
+            <CreateTask />
+          </ProtectedRoute>
+        } />
+        
+        <Route path="/tasks/:id" element={
+          <ProtectedRoute>
+            <TaskDetails />
+          </ProtectedRoute>
+        } />
+        
+        <Route path="/profile" element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        } />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
