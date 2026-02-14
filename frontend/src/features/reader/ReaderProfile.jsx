@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleBookmark, clearHistory } from "../../store/contentSlice";
 
+import { logout } from "../../store/authSlice"; 
+import { clearUser } from "../../store/avatarSlice";
+
 import {
   User,
   Mail,
@@ -32,12 +35,21 @@ const ReaderProfile = () => {
   const bookmarks = useSelector((state) => state.content.bookmarks);
   const visitedArticles = useSelector((state) => state.content.visitedArticles);
 
+  const authUser = useSelector((state) => state.auth.user);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(!authUser){
+      navigate('/unauthorized');
+    }
+  },[authUser, navigate])
 
   useEffect(() => {
     const fetchReader = async () => {
       try {
+        if (!authUser) return;
         if (user) {
           setReader(user);
           setLoading(false);
@@ -52,7 +64,7 @@ const ReaderProfile = () => {
       }
     };
     fetchReader();
-  }, [user]);
+  }, [user, authUser]);
 
   useEffect(() => {
     const fetchSavedStories = async () => {
@@ -176,7 +188,14 @@ const ReaderProfile = () => {
               </div>
             </div>
 
-            <button className="w-full py-4 glass rounded-xl text-[10px] font-black uppercase tracking-widest text-primary hover:bg-primary hover:text-foreground transition-all flex items-center justify-center gap-2">
+            <button 
+              className="w-full py-4 glass rounded-xl text-[10px] font-black uppercase tracking-widest text-primary hover:bg-primary hover:text-foreground transition-all flex items-center justify-center gap-2"
+              onClick={() => {
+                dispatch(logout()); 
+                dispatch(clearUser());
+                navigate('/'); 
+              }}
+            >
               <LogOut size={16} /> Logout Session
             </button>
           </motion.div>
@@ -226,24 +245,24 @@ const ReaderProfile = () => {
                   <div className="space-y-4">
                     {savedStories.map((story) => (
                       <div
-                        key={story._id}
+                        key={story?._id}
                         className="glass p-5 md:p-6 rounded-2xl border border-border flex items-center justify-between group hover:border-primary/50 transition-colors cursor-pointer"
-                        onClick={() => navigate(`/content/${story._id}`)}
+                        onClick={() => navigate(`/content/${story?._id}`)}
                       >
                         <div className="flex items-center gap-4 flex-1 min-w-0">
                           <Bookmark
                             size={24}
-                            className="text-primary flex-shrink-0"
+                            className="text-primary shrink-0"
                             fill="currentColor"
                           />
                           <div className="min-w-0">
                             <h4 className="font-medium line-clamp-1">
-                              {story.title || "Untitled Vision"}
+                              {story?.title || "Untitled Vision"}
                             </h4>
                             <p className="text-xs text-foreground/60 line-clamp-2 mt-1">
-                              {story.description
-                                ? story.description.substring(0, 90) +
-                                  (story.description.length > 90 ? "..." : "")
+                              {story?.description
+                                ? story?.description?.substring(0, 90) +
+                                  (story?.description?.length > 90 ? "..." : "")
                                 : "No description available"}
                             </p>
                           </div>
@@ -252,7 +271,7 @@ const ReaderProfile = () => {
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            dispatch(toggleBookmark(story._id));
+                            dispatch(toggleBookmark(story?._id));
                           }}
                           className="ml-3 px-3 py-1.5 text-sm font-medium text-red-400 hover:text-red-500 hover:bg-red-950/30 rounded-md transition-colors opacity-80 hover:opacity-100"
                         >

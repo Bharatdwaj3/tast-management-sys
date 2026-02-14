@@ -10,6 +10,8 @@ import  {
 } from "./features/index";
 
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
+import Unauthorized from './errors/Unauthorized';
 
 function App() {
 
@@ -28,11 +30,22 @@ function App() {
               <Route path="/content/crud" element={<ContentTab/>}/>
               <Route path="/explore" element={<Explore />} />
 
-              <Route path="/reader" element={<ReaderProfile />} />
-              <Route path="/writer" element={<WriterProfile />} />
+              <Route path="/reader" element={
+                  <ProtectedRoute>
+                    <ReaderProfile/>  
+                  </ProtectedRoute>
+                } 
+              />
+              <Route path="/writer" element={
+                  <ProtectedRoute>
+                    <WriterProfile/>  
+                  </ProtectedRoute>
+                }
+               />
               <Route path="/writer/new" element={<NewStory />} />
               
-            
+              <Route path="/unauthorized" element={<Unauthorized />} />
+
           </Routes>
         </Router>
     </>

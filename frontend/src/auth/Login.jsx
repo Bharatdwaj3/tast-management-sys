@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
 import { fetchUser } from '../store/avatarSlice';
+import { loginSuccess } from '../store/authSlice';
+
 import { Mail, Lock, Eye, EyeOff, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../util/api';
@@ -26,9 +29,11 @@ export default function Login() {
     try {
       await api.post('/user/login', formData);
       const userData = await dispatch(fetchUser()).unwrap();
+      dispatch(loginSuccess({ user: userData }));
       navigate(userData.accountType === 'reader' ? '/reader' : userData.accountType === 'creator' ? '/creator' : '/');
+
     } catch (err) {
-      setError('Invalid credentials');
+      setError('Invalid credentials',err);
       setLoading(false);
     }
   };
