@@ -12,14 +12,14 @@
   --color-border: #e5e7eb;       
   --radius: 0.75rem;              
 
-@layer components {
+}
   .glass {
     background: color-mix(in srgb, var(--color-card) 95%, transparent);
     backdrop-filter: blur(12px);
     border: 1px solid var(--color-border);
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
   }
-}
+
 
 @layer components {
   .bg-semi-dark {
@@ -54,4 +54,4 @@
   .content-card:hover {
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   }
-}}
+}

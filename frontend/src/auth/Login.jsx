@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -22,20 +23,22 @@ export default function Login() {
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
-    try {
-      await api.post('/user/login', formData);
-      const userData = await dispatch(fetchUser()).unwrap();
-      dispatch(loginSuccess({ user: userData }));
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
+  setLoading(true);
+  try {
+    await api.post('/user/login', formData);
+    const userData = await dispatch(fetchUser()).unwrap();
+    dispatch(loginSuccess({ user: userData }));
+    
+    navigate('/', { replace: true });
 
-    } catch (err) {
-      setError('Invalid credentials',err);
-      setLoading(false);
-    }
-  };
+  } catch (err) {
+    setLoading(false);
+    setError('Invalid credentials', err);
+  }
+};
 
   return (
    

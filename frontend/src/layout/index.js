@@ -1,4 +1,5 @@
-import Content from './Content';
-import Footer from './Footer';
 
-export {Content, Footer};
+import Footer from './Footer';
+import MainLayout from './MainLayout';
+
+export {MainLayout, Footer};

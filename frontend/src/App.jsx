@@ -1,16 +1,17 @@
-import { Dashboard, Projects, Tasks, CreateProject, CreateTask } from "./pages/index";
+import {
+    ProjectDetails, TaskDetails ,
+    Profile,
+    ProjectTab,TaskTab,
+    Dashboard,
+    ItemDetails, ItemGrid
+}from "./features/index";
 import { Login, Signup } from "./auth/index";
 import { Navbar } from "./components/index";
-
-import {   
-    ProjectDetails,
-    TaskDetails,
-    Profile
-} from "./features/index";
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import Unauthorized from './errors/Unauthorized';
+
+import {Home, NewStory} from "./pages/index"
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
       <Navbar />
       <Routes>
         
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
@@ -29,42 +30,14 @@ function App() {
           </ProtectedRoute>
         } />
         
-        <Route path="/projects" element={
-          <ProtectedRoute>
-            <Projects />
-          </ProtectedRoute>
-        } />
+        <Route path="/projects" element={<ProtectedRoute><ProjectTab /></ProtectedRoute>} />
+         <Route path="/projects/new" element={<ProtectedRoute><NewStory type="project" /></ProtectedRoute>} />
+        <Route path="/projects/:id" element={<ProtectedRoute><ItemDetails type="project" /></ProtectedRoute>} />
         
-        <Route path="/projects/new" element={
-          <ProtectedRoute>
-            <CreateProject />
-          </ProtectedRoute>
-        } />
-        
-        <Route path="/projects/:id" element={
-          <ProtectedRoute>
-            <ProjectDetails />
-          </ProtectedRoute>
-        } />
-        
-        <Route path="/tasks" element={
-          <ProtectedRoute>
-            <Tasks />
-          </ProtectedRoute>
-        } />
-        
-        <Route path="/tasks/new" element={
-          <ProtectedRoute>
-            <CreateTask />
-          </ProtectedRoute>
-        } />
-        
-        <Route path="/tasks/:id" element={
-          <ProtectedRoute>
-            <TaskDetails />
-          </ProtectedRoute>
-        } />
-        
+        <Route path="/tasks" element={<ProtectedRoute><TaskTab /></ProtectedRoute>} />
+        <Route path="/tasks/new" element={<ProtectedRoute><NewStory type="task"/></ProtectedRoute>} />
+        <Route path="/tasks/:id" element={<ProtectedRoute><ItemDetails type="task" /></ProtectedRoute>} />
+      
         <Route path="/profile" element={
           <ProtectedRoute>
             <Profile />

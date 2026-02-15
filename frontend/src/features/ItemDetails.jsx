@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -200,5 +201,8 @@ const ItemDetails = ({
     </div>
   );
 };
+
+export const ProjectDetails = () => <ItemDetails type="project" />;
+export const TaskDetails = () => <ItemDetails type="task" />;
 
 export default ItemDetails;

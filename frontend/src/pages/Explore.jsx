@@ -1,11 +1,46 @@
-import React, { useState } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import ContentGrid from "../features/content/ContentGrid";
-import { Filter, TrendingUp, Clock, Star } from "lucide-react";
+import { ItemGrid } from "../features/index";
+import { Filter, TrendingUp, Clock, Star, FolderOpen, ListTodo } from "lucide-react";
+import api from "../util/api";
 
 export default function Explore() {
+
+  const [selectedType, setSelectedType] = useState('projects'); // 'projects' or 'tasks'
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedFilter, setSelectedFilter] = useState('recent');
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      setLoading(true);
+      try {
+        let endpoint = selectedType === 'projects' ? '/projects' : '/tasks/recent';
+        const res = await api.get(endpoint);
+        
+        let filteredData = res.data;
+        
+        if (selectedFilter === 'recent') {
+          filteredData = filteredData.sort((a, b) => 
+            new Date(b.createdAt) - new Date(a.createdAt)
+          );
+        } else if (selectedFilter === 'featured') {
+          filteredData = filteredData.filter(item => item.featured);
+        }
+        
+        setItems(filteredData);
+      } catch (err) {
+        console.error(`Failed to fetch ${selectedType}:`, err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchItems();
+  }, [selectedType, selectedFilter]);
+
 
   const categories = [
     { id: 'all', label: 'All Stories' },
@@ -26,7 +61,7 @@ export default function Explore() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <div className="pt-24 pb-16">
-        <div className="max-w-[1400px] mx-auto px-6 mb-8">
+        <div className="max-w-350 mx-auto px-6 mb-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -40,7 +75,7 @@ export default function Explore() {
           </motion.div>
         </div>
 
-        <div className="max-w-[1400px] mx-auto px-6 mb-8">
+        <div className="max-w-350 mx-auto px-6 mb-8">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3 overflow-x-auto pb-2">
               <div className="flex items-center gap-2 text-sm font-semibold text-foreground/50 flex-shrink-0">
@@ -85,9 +120,12 @@ export default function Explore() {
           </div>
         </div>
         <div className="px-6">
-          <ContentGrid 
-            limit={20} 
-            categoryFilter={selectedCategory === 'all' ? null : selectedCategory}
+          <ItemGrid 
+            items={items}
+            type={selectedType === 'projects' ? 'project' : 'task'}
+            limit={20}
+            loading={loading}
+            emptyMessage={`No ${selectedType} found`}
           />
         </div>
       </div>

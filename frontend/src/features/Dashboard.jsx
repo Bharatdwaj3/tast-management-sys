@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { 
   FolderOpen, CheckCircle, Clock, AlertCircle,
   Plus, LayoutGrid, ListTodo 
@@ -11,8 +13,10 @@ import ItemGrid from "./ItemGrid";
 const Dashboard = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('projects');
-  const [projects, setProjects] = useState([]);
-  const [tasks, setTasks] = useState([]);
+
+  const projects = useSelector((state) => state.project.projects);
+  const tasks = useSelector((state) => state.task.tasks);
+
   const [stats, setStats] = useState({
     totalProjects: 0,
     totalTasks: 0,
@@ -22,16 +26,18 @@ const Dashboard = () => {
   });
   const [loading, setLoading] = useState(true);
 
+
+  
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const statsRes = await api.get("/projects/stats");
+         const statsRes = await api.get("/projects/stats");
         setStats(statsRes.data);
         
-        const projectsRes = await api.get("/projects?limit=6");
+        const projectsRes = await api.get("/projects");
         setProjects(projectsRes.data);
 
-        const tasksRes = await api.get("/tasks/recent?limit=6");
+        const tasksRes = await api.get("/tasks/");
         setTasks(tasksRes.data);
 
         setLoading(false);
@@ -94,6 +100,12 @@ const Dashboard = () => {
           >
             <Plus size={18} /> New Project
           </button>
+          <button
+      onClick={() => navigate("/tasks/new")}
+      className="px-6 py-3 bg-secondary text-white rounded-xl flex items-center gap-2 hover:bg-secondary/90 transition-all font-semibold text-sm shadow-lg shadow-secondary/20 whitespace-nowrap"
+    >
+      <Plus size={18} /> New Task
+    </button>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">

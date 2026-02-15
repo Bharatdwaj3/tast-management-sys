@@ -1,15 +1,15 @@
 import {configureStore} from "@reduxjs/toolkit";
 import avatarReducer from './avatarSlice';
-import contentReducer from './contentSlice';
-import followReducer from './followSlice';
 import authReducer from './authSlice';
+import projectReducer from './projectSlice';
+import taskReducer from './taskSlice';
 
 export const store=configureStore({
     reducer:{
         auth: authReducer,
-        avatar: avatarReducer,
-        content: contentReducer,
-        follow: followReducer,
+        avatar: avatarReducer, 
+        project: projectReducer,
+        task: taskReducer,
     },
 });
 
