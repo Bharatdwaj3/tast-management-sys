@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { MONGO_URI } from './env.config.js';
 
 export const connectDB = async () => {
-  console.log("🔍 Checking MongoDB URI:", MONGO_URI ? "✅ Found" : "❌ MISSING");
+  console.log("Checking MongoDB URI:", MONGO_URI ? "Found" : "MISSING");
   
   try {
     await mongoose.connect(MONGO_URI, {
@@ -16,10 +16,10 @@ export const connectDB = async () => {
       mongoose.connection.once('open', resolve);
     });
   } catch (err) {
-    console.log("❌ MongoDB connection failed!");
+    console.log("MongoDB connection failed!");
     console.log("Err name:", err.name);
     console.log("Err message:", err.message);
     console.log("Full err:", err);
-    throw err; // Re-throw so server.js knows it failed
+    throw err; 
   }
 };
