@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../store/authSlice";
 import { clearUser } from "../store/avatarSlice";
+import ItemGrid from "./ItemGrid";
+import ProfileModal from "./ProfileModal";
 
 import {
   User,
@@ -18,7 +20,7 @@ import {
   AlertCircle,
   Plus,
   Users,
-  Award
+  Award,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import api from "../util/api";
@@ -26,23 +28,24 @@ import api from "../util/api";
 const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const { user: avatarUser } = useSelector((state) => state.avatar);
   const { user: authUser } = useSelector((state) => state.auth);
-  
+  const [projects, setProjects] = useState([]);
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [tab, setTab] = useState(0);
   const [stats, setStats] = useState({
     totalProjects: 0,
     totalTasks: 0,
     completedTasks: 0,
-    pendingTasks: 0
+    pendingTasks: 0,
   });
 
   useEffect(() => {
     if (!authUser) {
-      navigate('/unauthorized');
+      navigate("/unauthorized");
     }
   }, [authUser, navigate]);
 
@@ -50,24 +53,31 @@ const Profile = () => {
     const fetchProfile = async () => {
       try {
         setLoading(true);
-        
+
         if (avatarUser) {
           setProfile(avatarUser);
         } else {
           const { data } = await api.get("/profile/me");
           setProfile(data);
         }
-        
+
         const projectsRes = await api.get("/projects");
-        const tasksRes = await api.get("/tasks/stats"); 
-        
+
+        const sortedRecentProjects = projectsRes.data
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .slice(0, 6);
+
+        setProjects(sortedRecentProjects);
+        const tasksRes = await api.get("/tasks/stats");
+
         setStats({
           totalProjects: projectsRes.data.length,
           totalTasks: tasksRes.data.totalTasks || 0,
           completedTasks: tasksRes.data.done || 0,
-          pendingTasks: (tasksRes.data.todo || 0) + (tasksRes.data.inProgress || 0)
+          pendingTasks:
+            (tasksRes.data.todo || 0) + (tasksRes.data.inProgress || 0),
         });
-        
+
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch profile:", error);
@@ -82,16 +92,23 @@ const Profile = () => {
 
   const handleLogout = async () => {
     try {
-      await api.post('/user/logout');
+      await api.post("/user/logout");
       dispatch(logout());
       dispatch(clearUser());
-      navigate('/');
+      navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
 
-  const getInitial = (name) => name ? name[0].toUpperCase() : 'U';
+  const handleOpenProfileModal = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("Edit button clicked!");
+    setIsProfileModalOpen(true);
+  };
+
+  const getInitial = (name) => (name ? name[0].toUpperCase() : "U");
 
   if (loading) {
     return (
@@ -109,11 +126,11 @@ const Profile = () => {
           animate={{ opacity: 1, y: 0 }}
           className="bg-card rounded-2xl border border-border shadow-lg p-8 mb-8 relative overflow-hidden"
         >
-          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-full blur-3xl -z-10" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-linear-to-br from-primary/5 to-secondary/5 rounded-full blur-3xl -z-10" />
 
           <div className="flex flex-col md:flex-row items-start gap-8">
-            <div className="relative flex-shrink-0">
-              <div className="w-32 h-32 rounded-2xl ring-4 ring-background shadow-xl overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
+            <div className="relative shrink-0">
+              <div className="w-32 h-32 rounded-2xl ring-4 ring-background shadow-xl overflow-hidden bg-linear-to-br from-primary/10 to-secondary/10">
                 {profile?.avatar ? (
                   <img
                     src={profile.avatar}
@@ -126,11 +143,13 @@ const Profile = () => {
                   </div>
                 )}
               </div>
+
               <button
-                onClick={() => navigate("/profile/edit")}
-                className="absolute -bottom-3 -right-3 p-3 bg-primary rounded-xl text-white shadow-lg hover:scale-110 transition-transform"
+                type="button"
+                onClick={handleOpenProfileModal}
+                className="mt-3 w-full px-6 py-2.5 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-all flex items-center justify-center gap-2 text-sm font-semibold cursor-pointer border border-primary/20 hover:border-primary/40 active:scale-95"
               >
-                <Edit3 size={18} />
+                <Edit3 size={16} /> Edit Profile
               </button>
             </div>
 
@@ -149,13 +168,6 @@ const Profile = () => {
                     @{profile?.userName}
                   </p>
                 </div>
-
-                <button
-                  onClick={() => navigate("/settings")}
-                  className="p-2 hover:bg-foreground/5 rounded-lg transition-colors"
-                >
-                  <Settings size={20} className="text-foreground/40" />
-                </button>
               </div>
 
               {profile?.bio && (
@@ -213,12 +225,6 @@ const Profile = () => {
                 >
                   <Plus size={18} /> New Project
                 </button>
-                <button
-                  onClick={() => navigate(`/profile/${profile?._id}`)}
-                  className="px-6 py-3 border border-border rounded-lg hover:border-primary hover:text-primary transition-colors font-semibold text-sm"
-                >
-                  View Public Profile
-                </button>
               </div>
             </div>
           </div>
@@ -240,10 +246,9 @@ const Profile = () => {
           ))}
         </div>
 
-        <div className="min-h-[400px]">
+        <div className="min-h-100">
           {tab === 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -299,22 +304,23 @@ const Profile = () => {
           )}
 
           {tab === 1 && (
-            <div className="bg-card border border-border rounded-2xl p-12 text-center">
-              <div className="max-w-md mx-auto">
-                <div className="w-16 h-16 rounded-full bg-foreground/5 flex items-center justify-center mx-auto mb-4">
-                  <FileText size={32} className="text-foreground/20" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Your Projects</h3>
-                <p className="text-foreground/50 mb-6">
-                  View and manage all your projects here.
-                </p>
+            <div className="space-y-6">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-bold">Recent Projects</h3>
                 <button
-                  onClick={() => navigate("/projects")}
-                  className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-semibold text-sm"
+                  onClick={() => navigate("/projects/new")}
+                  className="px-4 py-2 bg-primary text-white rounded-lg flex items-center gap-2 text-sm font-semibold hover:bg-primary/90 transition-colors"
                 >
-                  Go to Projects
+                  <Plus size={16} /> New Project
                 </button>
               </div>
+
+              <ItemGrid
+                items={projects}
+                type="project"
+                loading={loading}
+                emptyMessage="No projects yet. Create one to get started!"
+              />
             </div>
           )}
 
@@ -342,6 +348,13 @@ const Profile = () => {
           </button>
         </div>
       </div>
+
+      <ProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={() => {
+          setIsProfileModalOpen(false);
+        }}
+      />
     </div>
   );
 };

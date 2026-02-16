@@ -17,7 +17,7 @@ api.interceptors.response.use(
 
       try {
         console.log('Access token expired – trying to refresh login...');
-        await api.post('/refresh');
+        await api.post('/user/refresh');
         console.log('Refresh worked! Retrying original request...');
         return api(originalRequest);
       } catch (refreshError) {

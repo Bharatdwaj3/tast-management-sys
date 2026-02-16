@@ -11,11 +11,12 @@ import {
 
 import { authUser } from "../middleware/index.js";
 
-router.get('/:id', getProfile);  
 
 router.get('/me', authUser, getMyProfile);          
-router.put('/me', authUser, updateProfile);          
-router.delete('/me', authUser, deleteMyProfile);   
+router.put('/edit', authUser, updateProfile);          
+router.delete('/del', authUser, deleteMyProfile);   
 router.get('/members/all', authUser, getMembers);   
+
+router.get('/:id', getProfile);  
 
 export default router;

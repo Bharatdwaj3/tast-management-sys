@@ -7,7 +7,7 @@ import api from "../util/api";
 
 export default function Explore() {
 
-  const [selectedType, setSelectedType] = useState('projects'); // 'projects' or 'tasks'
+  const [selectedType, setSelectedType] = useState('projects'); 
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedFilter, setSelectedFilter] = useState('recent');
   const [items, setItems] = useState([]);
@@ -78,7 +78,7 @@ export default function Explore() {
         <div className="max-w-350 mx-auto px-6 mb-8">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3 overflow-x-auto pb-2">
-              <div className="flex items-center gap-2 text-sm font-semibold text-foreground/50 flex-shrink-0">
+              <div className="flex items-center gap-2 text-sm font-semibold text-foreground/50 shrink-0">
                 <Filter size={16} />
                 <span>Sort by:</span>
               </div>

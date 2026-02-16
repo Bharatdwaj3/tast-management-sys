@@ -46,7 +46,7 @@ const ProjectTab = () => {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pt-40 px-6">
       <div className="flex flex-col sm:flex-row gap-4 justify-between items-center">
         <div className="relative w-full sm:w-96 group">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/30 group-focus-within:text-primary transition-colors" size={18} />

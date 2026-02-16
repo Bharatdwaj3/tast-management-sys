@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { createSelector } from '@reduxjs/toolkit';
 
 const initialState = {
   tasks: [],
-  currentTask: null,
   filterStatus: 'all', 
   filterPriority: 'all', 
   loading: false,
@@ -15,32 +15,6 @@ const taskSlice = createSlice({
   reducers: {
     setTasks: (state, action) => {
       state.tasks = action.payload;
-      state.loading = false;
-      state.error = null;
-    },
-    addTask: (state, action) => {
-      state.tasks.push(action.payload);
-    },
-    updateTask: (state, action) => {
-      const index = state.tasks.findIndex(t => t._id === action.payload._id);
-      if (index !== -1) {
-        state.tasks[index] = action.payload;
-      }
-      if (state.currentTask?._id === action.payload._id) {
-        state.currentTask = action.payload;
-      }
-    },
-    deleteTask: (state, action) => {
-      state.tasks = state.tasks.filter(t => t._id !== action.payload);
-      if (state.currentTask?._id === action.payload) {
-        state.currentTask = null;
-      }
-    },
-    setCurrentTask: (state, action) => {
-      state.currentTask = action.payload;
-    },
-    clearCurrentTask: (state) => {
-      state.currentTask = null;
     },
     setFilterStatus: (state, action) => {
       state.filterStatus = action.payload;
@@ -67,11 +41,6 @@ const taskSlice = createSlice({
 
 export const {
   setTasks,
-  addTask,
-  updateTask,
-  deleteTask,
-  setCurrentTask,
-  clearCurrentTask,
   setFilterStatus,
   setFilterPriority,
   clearFilters,
@@ -79,5 +48,35 @@ export const {
   setError,
   clearError,
 } = taskSlice.actions;
+
+export const selectAllTasks = (state) => state.task.tasks;
+
+export const selectRecentTasks = (state, limit = 6) => {
+  const tasks = state.task.tasks;
+  return [...tasks]
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .slice(0, limit);
+};
+
+export const selectTaskStats = createSelector(
+  [selectAllTasks],
+  (tasks) => ({
+    totalTasks: tasks.length,
+    todo: tasks.filter(t => t.status === 'Todo').length,
+    inProgress: tasks.filter(t => t.status === 'In Progress').length,
+    done: tasks.filter(t => t.status === 'Done').length
+  })
+);
+
+export const selectFilteredTasks = createSelector(
+  [selectAllTasks, (state) => state.task.filterStatus, (state) => state.task.filterPriority],
+  (tasks, filterStatus, filterPriority) => {
+    return tasks.filter(task => {
+      const statusMatch = filterStatus === 'all' || task.status === filterStatus;
+      const priorityMatch = filterPriority === 'all' || task.priority === filterPriority;
+      return statusMatch && priorityMatch;
+    });
+  }
+);
 
 export default taskSlice.reducer;

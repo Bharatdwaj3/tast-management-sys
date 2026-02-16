@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { 
   FolderOpen, CheckCircle, Clock, AlertCircle,
   Plus, LayoutGrid, ListTodo 
@@ -10,8 +10,12 @@ import {
 import api from "../util/api";
 import ItemGrid from "./ItemGrid";
 
+import { setProjects } from "../store/projectSlice"; 
+import { setTasks } from "../store/taskSlice";
+
 const Dashboard = () => {
   const navigate = useNavigate();
+   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState('projects');
 
   const projects = useSelector((state) => state.project.projects);
@@ -35,10 +39,11 @@ const Dashboard = () => {
         setStats(statsRes.data);
         
         const projectsRes = await api.get("/projects");
-        setProjects(projectsRes.data);
+        dispatch(setProjects(projectsRes.data));
 
-        const tasksRes = await api.get("/tasks/");
-        setTasks(tasksRes.data);
+        const tasksRes = await api.get("/tasks/recent?limit=50");
+        dispatch(setTasks(tasksRes.data));
+        
 
         setLoading(false);
       } catch (error) {
@@ -48,7 +53,7 @@ const Dashboard = () => {
     };
 
     fetchDashboardData();
-  }, []);
+  }, [dispatch]);
 
   const statsCards = [
     {

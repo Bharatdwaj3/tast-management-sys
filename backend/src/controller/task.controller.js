@@ -3,26 +3,31 @@ import Task from "../models/task.model.js";
 import Project from "../models/project.model.js";
 
 const getTasks = async (req, res) => {
-    try {
-        const { projectId } = req.params;
-        const project = await Project.findOne({ 
-            _id: projectId, 
-            owner: req.user.id 
-        });
+  try {
+    const userProjects = await Project.find({ owner: req.user.id }).select('_id');
 
-        if (!project) {
-            return res.status(404).json({ message: "Project not found" });
-        }
-
-        const tasks = await Task.find({ project: projectId })
-            .populate('assignedTo', 'fullName userName avatar')
-            .sort({ createdAt: -1 });
-
-        res.status(200).json(tasks);
-    } catch (error) {
-        console.error("Cannot get tasks:", error);
-        res.status(500).json({ message: error.message });
+    if (userProjects.length === 0) {
+      return res.status(200).json([]); 
     }
+
+    const projectIds = userProjects.map(p => p._id);
+    let query = Task.find({ project: { $in: projectIds } })
+      .populate('assignedTo', 'fullName userName avatar')
+      .populate('project', 'title') 
+      .sort({ createdAt: -1 });
+
+    const limit = parseInt(req.query.limit) || 0;
+    if (limit > 0) {
+      query = query.limit(limit);
+    }
+
+    const tasks = await query;
+
+    res.status(200).json(tasks);
+  } catch (error) {
+    console.error("Cannot get tasks:", error);
+    res.status(500).json({ message: error.message });
+  }
 };
 
 const getTask = async (req, res) => {
@@ -55,6 +60,7 @@ const getTask = async (req, res) => {
 
 const createTask = async (req, res) => {
     try {
+       console.log("Creating task with data:", req.body); 
         const { title, description, status, priority, dueDate, projectId, assignedTo } = req.body;
 
         if (!title || !projectId) {
@@ -92,6 +98,35 @@ const createTask = async (req, res) => {
         console.error("Create task error:", error);
         res.status(500).json({ message: "Server error", error: error.message });
     }
+};
+
+const getTasksByProject = async (req, res) => {
+  try {
+    const { projectId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(projectId)) {
+      return res.status(400).json({ message: "Invalid project ID" });
+    }
+
+    const task = await Task.find({ project: projectId })
+      .populate('assignedTo', 'fullName userName avatar')
+      .populate('project', 'title')
+      .sort({ createdAt: -1 });
+
+    const project = await Project.findOne({
+      _id: projectId,
+      owner: req.user.id
+    });
+
+    if (!project) {
+      return res.status(403).json({ message: "Not authorized to view this project's tasks" });
+    }
+
+    res.status(200).json(task);
+  } catch (error) {
+    console.error("Cannot get tasks by project:", error);
+    res.status(500).json({ message: error.message });
+  }
 };
 
 const updateTask = async (req, res) => {
@@ -165,10 +200,47 @@ const deleteTask = async (req, res) => {
     }
 };
 
+const getTaskStats = async (req, res) => {
+  try {
+    const userProjects = await Project.find({ owner: req.user.id }).select('_id');
+
+    if (userProjects.length === 0) {
+      return res.status(200).json({ totalTasks: 0, todo: 0, inProgress: 0, done: 0 });
+    }
+
+    const projectIds = userProjects.map(p => p._id);
+
+    const stats = await Task.aggregate([
+      { $match: { project: { $in: projectIds } } },
+      {
+        $group: {
+          _id: "$status",
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+
+    const result = { totalTasks: 0, todo: 0, inProgress: 0, done: 0 };
+    stats.forEach(s => {
+      if (s._id === 'Todo') result.todo = s.count;
+      if (s._id === 'In Progress') result.inProgress = s.count;
+      if (s._id === 'Done') result.done = s.count;
+      result.totalTasks += s.count;
+    });
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Cannot get task stats:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export {
     getTasks,
     getTask,
+    getTaskStats,
     createTask,
     updateTask,
-    deleteTask
+    deleteTask,
+    getTasksByProject
 };

@@ -112,8 +112,8 @@ const ItemGrid = ({
               <>
                 <div className={`p-5 border-b border-border ${
                   type === 'project' 
-                    ? 'bg-gradient-to-r from-primary/5 to-transparent' 
-                    : `bg-gradient-to-r ${
+                    ? 'bg-linear-to-r from-primary/5 to-transparent' 
+                    : `bg-linear-to-r ${
                         item.priority === 'High' ? 'from-red-500/5' :
                         item.priority === 'Medium' ? 'from-orange-500/5' :
                         'from-gray-500/5'

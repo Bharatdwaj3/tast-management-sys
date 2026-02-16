@@ -7,8 +7,6 @@ import { ValueProp } from "../components/ValueProp";
 import { ItemGrid } from "../features/index";
 import api from "../util/api";
 
-
-
 export default function Home() {
 
   const [recentItems, setRecentItems] = useState([]);
@@ -34,7 +32,7 @@ export default function Home() {
         <Hero />
       </div>
       <section className="relative py-24 px-6 lg:px-24">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-linear-to-r from-transparent via-border to-transparent" />
         <ValueProp />
       </section>
       <section className="pb-24">
