@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/noblese';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/taskCrud';
 
 const JWT_REF_SECRECT = process.env.JWT_REF_SECRECT || 'defaultjwtsecret';
 const JWT_REF_EXPIRES_IN = process.env.JWT_REF_EXPIRES_IN || '1d';
