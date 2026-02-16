@@ -15,11 +15,11 @@ export const connectDB = async () => {
     return new Promise((resolve) => {
       mongoose.connection.once('open', resolve);
     });
-  } catch (error) {
+  } catch (err) {
     console.log("❌ MongoDB connection failed!");
-    console.log("Error name:", error.name);
-    console.log("Error message:", error.message);
-    console.log("Full error:", error);
-    throw error; // Re-throw so server.js knows it failed
+    console.log("Err name:", err.name);
+    console.log("Err message:", err.message);
+    console.log("Full err:", err);
+    throw err; // Re-throw so server.js knows it failed
   }
 };
