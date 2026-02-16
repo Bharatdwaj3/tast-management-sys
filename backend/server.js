@@ -1,4 +1,4 @@
-console.log("🚀 STARTING UP - This should appear in logs");
+
 import express from 'express';
 import cors from "cors";
 import cookieParser from "cookie-parser";
