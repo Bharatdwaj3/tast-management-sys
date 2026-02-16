@@ -41,4 +41,4 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/tasks", taskRoutes);
 
 app.use(dbMiddleware);
-app.listen(PORT, () => console.log("Server Started at port : ", PORT));
+app.listen(PORT, '0.0.0.0', () => console.log("Server Started at port : ", PORT));
