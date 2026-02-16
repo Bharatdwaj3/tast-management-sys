@@ -1,7 +1,13 @@
 import bycrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User  from "../models/user.model.js";
-import { setAccessToken, setRefreshToken, clearAuthCookies, revokeRefreshToken, refreshTokenHandler} from '../middleware/token.middleware.js';
+import { 
+  setAccessToken, 
+  setRefreshToken, 
+  clearAuthCookies, 
+  revokeRefreshToken, 
+  refreshTokenHandler
+} from '../middleware/token.middleware.js';
 
 
 

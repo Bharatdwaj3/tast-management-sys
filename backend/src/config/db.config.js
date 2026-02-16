@@ -10,7 +10,7 @@ export const connectDB = async () => {
       serverSelectionTimeoutMS: 30000,
     });
     
-    console.log("✅ MongoDB connected successfully");
+    console.log("MongoDB connected successfully");
     
     return new Promise((resolve) => {
       mongoose.connection.once('open', resolve);

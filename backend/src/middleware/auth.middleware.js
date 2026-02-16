@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import User  from '../models/user.model.js';
-import { JWT_ACC_SECRECT } from "../config/env.config.js";
+import { 
+  JWT_ACC_SECRECT 
+} from "../config/env.config.js";
 export const authUser = async (req, res, next ) => {
 
 

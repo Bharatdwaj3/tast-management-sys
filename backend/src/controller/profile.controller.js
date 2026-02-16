@@ -1,7 +1,5 @@
 import User from "../models/user.model.js";
 
-
-
 const getProfile = async (req, res) => {
     try {
         const { id } = req.params;
