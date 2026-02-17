@@ -6,7 +6,7 @@ import { JWT_ACC_SECRECT, JWT_ACC_EXPIRES_IN, JWT_REF_SECRECT, JWT_REF_EXPIRES_I
 const cookieOpts=(maxAge, path='/')=>({
     httpOnly: true,
     secure: process.env.NODE_ENV=='production',
-    sameSite: process.env.NODE_ENV=='production' ? 'strict' : 'lax',
+    sameSite: process.env.NODE_ENV=='production' ? 'none' : 'lax',
     path,
     maxAge: maxAge*1000
 });
