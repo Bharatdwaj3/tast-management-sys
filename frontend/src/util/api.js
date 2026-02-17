@@ -27,6 +27,7 @@ api.interceptors.response.use(
         if (!window.location.pathname.includes('/login') && 
             !window.location.pathname.includes('/signup')) {
           window.location.href = '/login';
+            }
         console.error('Could not refresh token:', refreshError);
         return Promise.reject(refreshError);
       }
