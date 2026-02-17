@@ -21,12 +21,8 @@
   - [🛠️ Tech Stack \& Architecture](#️-tech-stack--architecture)
     - [Architectural Overview](#architectural-overview)
   - [📁 Project Structure](#-project-structure)
-  - [🚀 Getting Started](#-getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation \& Setup](#installation--setup)
   - [🔧 Usage](#-usage)
     - [Interacting with the UI](#interacting-with-the-ui)
-    - [API Interaction](#api-interaction)
   - [Development Guidelines](#development-guidelines)
   - [📝 License](#-license)
 
@@ -137,56 +133,6 @@ Bharatdwaj3-tast-management-sys-3c08f4b/
 
 ---
 
-### 🚀 Getting Started
-
-To get a local instance of Scribe up and running, follow these steps.
-
-#### Prerequisites
-
-- **Docker & Docker Compose:** Recommended for the easiest setup.
-
-- **Node.js:** If running outside of Docker (v18+ recommended).
-
-#### Installation & Setup
-
-1. **Clone the Repository:**
-
-    ```bash
-    git clone https://github.com/Bharatdwaj3/tast-management-sys.git
-    cd Bharatdwaj3-tast-management-sys-3c08f4b
-    ```
-
-2. **Environment Configuration:**
-    - Navigate to the `backend/` directory and rename `.env.example` to `.env`.
-    - Navigate to the `frontend/` directory and rename `.env.example` to `.env`.
-    - Fill in the required fields (Database URIs, Secrets).
-
-3. **Run with Docker (Recommended):**
-    The project includes a `docker-compose.yml` file that automates the setup of both the frontend and backend.
-
-    ```bash
-    docker-compose up --build
-    ```
-
-4. **Manual Local Setup (Alternative):**
-    - **Backend:**
-
-        ```bash
-        cd backend
-        npm install
-        npm run dev
-        ```
-
-    - **Frontend:**
-
-        ```bash
-        cd frontend
-        npm install
-        npm run dev
-        ```
-
----
-
 ### 🔧 Usage
 
 #### Interacting with the UI
@@ -198,13 +144,6 @@ To get a local instance of Scribe up and running, follow these steps.
     - Use the **TaskTab** to add specific tasks, set priorities, and track progress.
 4. **Profile Management:** Access the `Profile` section to update user settings and view activity history.
 
-#### API Interaction
-
-The backend exposes a RESTful interface. While the system primarily interacts via the frontend, you can verify connectivity:
-
-- **Health Check:**
-  - **Endpoint:** `GET /`
-  - **Description:** Returns the base status of the Express server to confirm it is operational.
 
 ---
 
