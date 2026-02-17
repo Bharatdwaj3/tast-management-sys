@@ -65,59 +65,6 @@ Scribe leverages a battle-tested technical stack to ensure performance, security
 2. **API Layer:** An Express server acting as the orchestrator, routing requests through custom middleware for token validation and database connectivity.
 3. **Data Layer:** Utilizes Mongoose models to define the structure of Users, Tasks, and Projects, ensuring consistent data storage and retrieval.
 
----
-
-###  Project Structure
-
-```
-Bharatdwaj3-tast-management-sys-3c08f4b/
-├── 📄 docker-compose.yml           # Orchestrates frontend and backend containers
-├── 📂 frontend/                    # React client-side application
-│   ├── 📄 index.html               # Entry point for the web browser
-│   ├── 📄 vite.config.js           # Configuration for the Vite build tool
-│   ├── 📄 Dockerfile               # Container definition for the frontend
-│   ├── 📄 .env.example             # Template for client-side environment variables
-│   ├── 📂 src/
-│   │   ├── 📄 main.jsx             # React application mount point
-│   │   ├── 📄 App.jsx              # Root component and routing logic
-│   │   ├── 📂 components/          # Reusable UI building blocks
-│   │   │   ├── 📄 Navbar.jsx       # Global navigation bar
-│   │   │   ├── 📄 Hero.jsx         # Landing page hero section
-│   │   │   └── 📄 ProtectedRoute.jsx # Auth-guarded route wrapper
-│   │   ├── 📂 features/            # Business logic components
-│   │   │   ├── 📄 Dashboard.jsx    # Main user workspace
-│   │   │   ├── 📄 TaskTab.jsx      # Task management interface
-│   │   │   └── 📄 ProjectTab.jsx   # Project organization interface
-│   │   ├── 📂 auth/                # Identity management components
-│   │   │   ├── 📄 Login.jsx        # User sign-in interface
-│   │   │   └── 📄 Signup.jsx       # New user registration
-│   │   ├── 📂 store/               # Redux/State management logic
-│   │   │   ├── 📄 taskSlice.js     # State for task operations
-│   │   │   └── 📄 authSlice.js     # State for authentication status
-│   │   └── 📂 util/                # Client-side utility functions
-│   │       └── 📄 api.js           # Axios/Fetch API configuration
-└── 📂 backend/                     # Node.js server-side application
-    ├── 📄 server.js                # Main entry point for the backend server
-    ├── 📄 Dockerfile               # Container definition for the backend
-    ├── 📄 .env.example             # Template for server-side environment variables
-    ├── 📂 src/
-    │   ├── 📂 config/              # Server and database configurations
-    │   │   ├── 📄 db.config.js     # Mongoose connection logic
-    │   │   └── 📄 env.config.js    # Environment variable loader
-    │   ├── 📂 middleware/          # Request processing layers
-    │   │   ├── 📄 auth.middleware.js # JWT verification logic
-    │   │   └── 📄 db.middleware.js   # Database connectivity checks
-    │   ├── 📂 models/              # Database schema definitions
-    │   │   ├── 📄 user.model.js    # User data structure
-    │   │   ├── 📄 task.model.js    # Task data structure
-    │   │   └── 📄 project.model.js # Project data structure
-    │   ├── 📂 routes/              # API endpoint definitions
-    │   │   ├── 📄 task.routes.js   # Routes for task operations
-    │   │   └── 📄 user.routes.js   # Routes for user management
-    │   └── 📂 controller/          # Business logic implementation
-    │       ├── 📄 task.controller.js # Logic for processing task requests
-    │       └── 📄 user.controller.js # Logic for processing user requests
-```
 
 ---
 
