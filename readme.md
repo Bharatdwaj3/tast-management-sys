@@ -12,23 +12,11 @@
 </p>
 ---
 
-### 📌 Table of Contents
 
-- [](#)
-  - [📌 Table of Contents](#-table-of-contents)
-  - [🚀 Overview](#-overview)
-  - [✨ Key Features](#-key-features)
-  - [🛠️ Tech Stack \& Architecture](#️-tech-stack--architecture)
-    - [Architectural Overview](#architectural-overview)
-  - [📁 Project Structure](#-project-structure)
-  - [🔧 Usage](#-usage)
-    - [Interacting with the UI](#interacting-with-the-ui)
-  - [Development Guidelines](#development-guidelines)
-  - [📝 License](#-license)
 
 ---
 
-### 🚀 Overview
+### Overview
 
 Scribe is a comprehensive, microservices-oriented task management ecosystem designed to streamline how modern teams organize, track, and execute complex projects. By providing a centralized workspace that bridges the gap between high-level project planning and granular task execution, Scribe empowers users to maintain focus on what matters most: delivering value.
 
@@ -44,21 +32,21 @@ The system utilizes a modern architecture featuring:
 
 ---
 
-### ✨ Key Features
+### Key Features
 
 Scribe is built with a focus on the user journey, ensuring that every feature translates directly into a tangible business benefit.
 
-- 📊 **Interactive Unified Dashboard:** Gain a bird's-eye view of all ongoing activities. Users can monitor project health and task distribution at a glance, reducing the time spent on status update meetings.
-- 📁 **Scoped Project Organization:** Group related efforts into logical "Projects." This allows users to compartmentalize different workstreams and manage resources more effectively without cognitive overload.
-- ✅ **Granular Task Management:** Drill down into specific action items. With dedicated task tabs and grids, users can manage the lifecycle of an individual unit of work from "To-Do" to "Done."
-- 👤 **Personalized User Profiles:** Dedicated profile management where users can track their specific contributions, view personal metrics, and manage their identity within the system.
-- 🔒 **Secure Environment:** Features a protected routing system and secure authentication (via JWT and Bcrypt), ensuring that sensitive project data is only accessible to authorized team members.
-- 📱 **Responsive Layouts:** A professional UI featuring a consistent Navbar, Hero sections, and Footers, providing a seamless experience whether the user is on a desktop or a mobile device.
-- 🐳 **Containerized Deployment:** Ready for modern cloud environments using Docker and Docker Compose, ensuring "it works on my machine" translates to "it works in production."
+-  **Interactive Unified Dashboard:** Gain a bird's-eye view of all ongoing activities. Users can monitor project health and task distribution at a glance, reducing the time spent on status update meetings.
+- **Scoped Project Organization:** Group related efforts into logical "Projects." This allows users to compartmentalize different workstreams and manage resources more effectively without cognitive overload.
+- **Granular Task Management:** Drill down into specific action items. With dedicated task tabs and grids, users can manage the lifecycle of an individual unit of work from "To-Do" to "Done."
+-  **Personalized User Profiles:** Dedicated profile management where users can track their specific contributions, view personal metrics, and manage their identity within the system.
+-  **Secure Environment:** Features a protected routing system and secure authentication (via JWT and Bcrypt), ensuring that sensitive project data is only accessible to authorized team members.
+- **Responsive Layouts:** A professional UI featuring a consistent Navbar, Hero sections, and Footers, providing a seamless experience whether the user is on a desktop or a mobile device.
+- **Containerized Deployment:** Ready for modern cloud environments using Docker and Docker Compose, ensuring "it works on my machine" translates to "it works in production."
 
 ---
 
-### 🛠️ Tech Stack & Architecture
+### Tech Stack & Architecture
 
 Scribe leverages a battle-tested technical stack to ensure performance, security, and maintainability.
 
@@ -79,7 +67,7 @@ Scribe leverages a battle-tested technical stack to ensure performance, security
 
 ---
 
-### 📁 Project Structure
+###  Project Structure
 
 ```
 Bharatdwaj3-tast-management-sys-3c08f4b/
@@ -133,7 +121,7 @@ Bharatdwaj3-tast-management-sys-3c08f4b/
 
 ---
 
-### 🔧 Usage
+###  Usage
 
 #### Interacting with the UI
 
@@ -144,15 +132,6 @@ Bharatdwaj3-tast-management-sys-3c08f4b/
     - Use the **TaskTab** to add specific tasks, set priorities, and track progress.
 4. **Profile Management:** Access the `Profile` section to update user settings and view activity history.
 
-
----
-
-### Development Guidelines
-
-- ✅ Follow the existing React/Express code style and conventions.
-- 📝 Add comments for complex logic in controllers and store slices.
-- 🧪 Ensure the Docker build passes before submitting a PR.
-- 🎯 Keep commits focused and atomic.
 
 ---
 
