@@ -19,11 +19,6 @@ import morganConfig from "./src/config/morgan.config.js";
 const app = express();
 
 connectDB();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true, limit: "8kb" }));
-app.use(cookieParser());
-
-app.use(morganConfig);
 
 app.use(
   cors({
@@ -33,6 +28,14 @@ app.use(
     allowedHeaders: ['Content-Type', 'Authorization']
   })
 );
+
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true, limit: "8kb" }));
+app.use(cookieParser());
+
+app.use(morganConfig);
+
 
 app.get("/", (req, res) => res.send("Server ready"));
 
