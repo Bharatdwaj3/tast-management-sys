@@ -24,7 +24,7 @@ export default function Signup() {
       await api.post('/user/register', formData);
       navigate('/login', { state: { message: 'Success' } });
     } catch (err) {
-      setError('Registration failed',err);
+      setError(err.response?.data?.message || 'Registration failed. Please try again.');
       setLoading(false);
     }
   };
