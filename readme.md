@@ -1,10 +1,6 @@
 <h1 align="center"> Scribe: A task management system </h1>
 
 <p align="center">
-  Elevating organizational productivity through seamless task orchestration and intuitive project lifecycle management.
-</p>
-
-<p align="center">
   <img alt="Build" src="https://img.shields.io/badge/Build-Passing-brightgreen?style=for-the-badge">
   <img alt="Issues" src="https://img.shields.io/badge/Issues-0%20Open-blue?style=for-the-badge">
   <img alt="Contributions" src="https://img.shields.io/badge/Contributions-Welcome-orange?style=for-the-badge">
